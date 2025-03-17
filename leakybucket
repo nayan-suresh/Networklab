@@ -1,33 +1,40 @@
 #include<stdio.h>
+
 void main() {
-int n,leakrate,bsize,in,bucket_storage;
-bucket_storage=0;
-printf("Enter the bucket size: ");
-scanf("%d",&bsize);
-printf("Enter the no of inputs: ");
-scanf("%d",&n);
-printf("Enter the packet outgoing rate: ");
-scanf("%d",&leakrate);
-printf("Initially Bucket status contains %d out of %d\n",bucket_storage,bsize);
-while(n>0) {
-printf("Enter the incoming packet size \n");
-scanf("%d",&in);
-printf("Incoming packet size is %d\n",in);
-if(in<=bsize-bucket_storage) {
-bucket_storage=bucket_storage + in;
-printf("Bucket status: contains %d out of %d\n",bucket_storage,bsize);
-} else {
-printf("Dropped packets:%d\n",in-bsize+bucket_storage);
-bucket_storage=bsize;
-printf("Bucket status: contains %d out of %d\n",bucket_storage,bsize);
+    int bucket_size, outgoing, current, incoming, n;
+    current = 0;
+    printf("Enter bucket size: ");
+    scanf("%d", &bucket_size);
+    printf("Enter no of packets: ");
+    scanf("%d", &n);
+    printf("Enter outgoing rate: ");
+    scanf("%d", &outgoing);
+
+    printf("Initial bucket status: %d out of %d\n", current, bucket_size);
+
+    while (n > 0) {
+        printf("Enter incoming packet size: ");
+        scanf("%d", &incoming);
+
+        printf("Incoming packet size: %d\n", incoming);
+
+        if (incoming <= bucket_size - current) {
+            current += incoming;
+            printf("Bucket status: %d out of %d\n", current, bucket_size);
+        } else {
+            printf("Dropped packets: %d\n", incoming - (bucket_size - current));
+            current = bucket_size;
+            printf("Bucket status: %d out of %d\n", current, bucket_size);
+        }
+
+        current -= outgoing;
+        if (current < 0) current = 0;
+
+        printf("After sending, bucket status: %d out of %d\n", current, bucket_size);
+        n--;
+    }
 }
-bucket_storage=bucket_storage - leakrate;
-if(bucket_storage<0)
-bucket_storage=0;
-printf("After sending, Bucket status contains %d packets out of %d\n",bucket_storage,bsize);
-n--;
-}
-}
+
 
 
 
