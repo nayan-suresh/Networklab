@@ -1,0 +1,101 @@
+#include <stdio.h>
+#include <math.h>
+
+// Function to calculate factorial
+int factorial(int n) {
+    if (n == 0 || n == 1)
+        return 1;
+    else
+        return n * factorial(n - 1);
+}
+
+// Function to check if a number is prime
+int isPrime(int n) {
+    if (n <= 1)
+        return 0;
+    for (int i = 2; i <= sqrt(n); i++) {
+        if (n % i == 0)
+            return 0;
+    }
+    return 1;
+}
+
+// Function to generate Fibonacci sequence
+void fibonacci(int n) {
+    int a = 0, b = 1, c;
+    printf("Fibonacci sequence up to %d terms: ", n);
+    for (int i = 0; i < n; i++) {
+        printf("%d ", a);
+        c = a + b;
+        a = b;
+        b = c;
+    }
+    printf("\n");
+}
+
+// Function to check if a number is an Armstrong number
+int isArmstrong(int n) {
+    int originalNum = n, sum = 0, digit;
+    int numDigits = (int)log10(n) + 1;
+
+    while (n > 0) {
+        digit = n % 10;
+        sum += pow(digit, numDigits);
+        n /= 10;
+    }
+
+    return (sum == originalNum);
+}
+
+// Function to calculate the sum of digits
+int sumOfDigits(int n) {
+    int sum = 0;
+    while (n > 0) {
+        sum += n % 10;
+        n /= 10;
+    }
+    return sum;
+}
+
+// Function to reverse a number
+int reverseNumber(int n) {
+    int reversed = 0;
+    while (n > 0) {
+        reversed = reversed * 10 + n % 10;
+        n /= 10;
+    }
+    return reversed;
+}
+
+int main() {
+    int num;
+
+    printf("Enter a number: ");
+    scanf("%d", &num);
+
+    // Factorial
+    printf("Factorial of %d is %d\n", num, factorial(num));
+
+    // Prime check
+    if (isPrime(num))
+        printf("%d is a prime number\n", num);
+    else
+        printf("%d is not a prime number\n", num);
+
+    // Fibonacci sequence
+    fibonacci(num);
+
+    // Armstrong check
+    if (isArmstrong(num))
+        printf("%d is an Armstrong number\n", num);
+    else
+        printf("%d is not an Armstrong number\n", num);
+
+    // Sum of digits
+    printf("Sum of digits of %d is %d\n", num, sumOfDigits(num));
+
+    // Reverse number
+    printf("Reverse of %d is %d\n", num, reverseNumber(num));
+
+    return 0;
+}
